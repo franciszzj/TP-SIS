@@ -1,0 +1,78 @@
+DATA:
+  dataset: autolaparo
+  train_data_file: cris_train.json
+  train_data_root: ./AutoLaparo/
+  val_data_file: cris_val.json
+  val_data_root: ./AutoLaparo/
+  sents_select_type: "random"
+  use_vis_aug: True
+  use_vis_aug_non_rigid: False
+TRAIN:
+  freeze_modules: ['backbone.token_embedding', 'backbone.transformer']
+  # Base Arch
+  clip_pretrain: pretrain/CLIP-ViT-B-16-laion2B-s34B-b88K/open_clip_pytorch_model.bin
+  input_size: 448
+  word_len: 77
+  word_dim: 1024
+  vis_dim: 512
+  fpn_in: [512, 1024, 1024]
+  fpn_out: [256, 512, 1024]
+  sync_bn: True
+  # Decoder
+  num_layers: 3
+  num_head: 8
+  dim_ffn: 2048
+  dropout: 0.1
+  intermediate: False
+  # MaskIoU
+  pred_mask_iou: False
+  mask_iou_loss_type: "mse"
+  mask_iou_loss_weight: 1.0
+  # MoE
+  use_moe_select_best_sent: False
+  max_sent_num: 3
+  moe_selector_type: 'weighted_sum'
+  use_moe_consistency_loss: True
+  moe_consistency_loss_weight: 1.0
+  # MAE
+  use_mae_gen_target_area: False
+  mae_pretrain: 'pretrain/mae_pretrain_vit_base.pth'
+  mae_input_shape: [224, 224]
+  mae_mask_ratio: 0.25
+  reconstruct_full_img: True
+  mae_hard_example_mining_type: 'v1'
+  mae_shared_encoder: True
+  # Training Setting
+  workers: 8  # data loader workers
+  workers_val: 4
+  epochs: 50
+  milestones: [35]
+  start_epoch: 0
+  batch_size: 16  # batch size for training
+  batch_size_val: 16  # batch size for validation during training, memory and speed tradeoff
+  optimizer: adam
+  base_lr: 0.0001
+  lr_decay: 0.1
+  lr_multi: 0.1
+  weight_decay: 0.
+  amsgrad: False
+  max_norm: 0.
+  manual_seed: 0
+  print_freq: 100
+  # Resume & Save
+  exp_name: CRIS
+  output_folder: exp/autolaparo
+  save_freq: 1
+  weight:  # path to initial weight (default: none)
+  resume:  # path to latest checkpoint (default: none)
+  evaluate: True  # evaluate on validation set, extra gpu memory needed and small batch_size_val is recommend
+Distributed:
+  dist_url: tcp://localhost:3681
+  dist_backend: 'nccl'
+  multiprocessing_distributed: True
+  world_size: 1
+  rank: 0
+TEST:
+  test_data_file: cris_test.json
+  test_data_root: ./AutoLaparo/
+  visualize: False
