@@ -27,6 +27,15 @@ Particularly, a smaller difference between Ch_IoU and ISI_IoU for our method ind
 Next, comparing to methods in second group, which are originally designed for natural image segmentation, our method yields clearly superior results, validating the effectiveness of our specifically tailored modules for surgical instrument segmentation.
 
 
+## Visualization
+![vis](./assets/vis.png)
+Our segmentation visualization uses distinct colors to represent surgical instrument categories, with ground truth and predictions displayed in the first and second rows, respectively.
+
+![bf](./assets/bf.png)
+We introduce a mixture of prompts mechanism (MoP) for fusing results from multiple prompts.
+Here is an example of bipolar forceps.
+
+
 ## Usage
 
 ### Prepare Dataset
@@ -34,7 +43,6 @@ Follow ```tools/prepare_[dataset].py```
 
 ### Train
 ```
-PYTHONPATH="$(dirname $0)/..":$PYTHONPATH \
 python train.py \
   --config $CONFIG
 ```
@@ -48,27 +56,14 @@ python test.py \
 
 ### Evaluation
 ```
-echo "eval binary ..."
-python evaluate_2018.py \
-  --test_path ${test_path} \
-  --pred_path ${pred_path} \
-  --problem_type binary
-
-echo "eval parts ..."
-python evaluate_2018.py \
-  --test_path ${test_path} \
-  --pred_path ${pred_path} \
-  --problem_type parts
-
-echo "eval instruments ..."
-python evaluate_2018.py \
+python evaluate_[2017/2018].py \
   --test_path ${test_path} \
   --pred_path ${pred_path} \
   --problem_type instruments
 ```
 
 ## Acknowledgements
-TP-SIS is developed based on [CRIS.pytorch](https://github.com/DerrickWang005/CRIS.pytorch).
+TP-SIS is developed based on [CRIS](https://github.com/DerrickWang005/) and [CLIPSeg](https://github.com/timojl/clipseg).
 Thanks for their great works!
 
 ## Citation
