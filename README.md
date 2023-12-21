@@ -73,7 +73,7 @@ If you find this repository useful, please cite:
 @article{zhou2023text,
   title={Text Promptable Surgical Instrument Segmentation with Vision-Language Models},
   author={Zhou, Zijian and Alabi, Oluwatosin and Wei, Meng and Vercauteren, Tom and Shi, Miaojing},
-  journal={arXiv preprint arXiv:2306.09244},
+  journal={Advances in Neural Information Processing Systems},
   year={2023}
 }
 ```

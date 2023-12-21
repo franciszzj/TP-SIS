@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Zhou"
+  given-names: "Zijian"
+- family-names: "Alabi"
+  given-names: "Oluwatosin"
+- family-names: "Wei"
+  given-names: "Meng"
+- family-names: "Vercauteren"
+  given-names: "Tom"
+- family-names: "Shi"
+  given-names: "Miaojing"
+title: "Text Promptable Surgical Instrument Segmentation with Vision-Language Models"
+version: 1.0.0
+date-released: 2023-11-20
+url: "https://github.com/franciszzj/TP-SIS"
